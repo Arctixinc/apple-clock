@@ -74,13 +74,19 @@
 
   // Inject generated styles
   function injectStyles() {
+    var existingStyles = document.getElementById("generated-styles");
+    if(existingStyles) existingStyles.remove();
+
+    var dateChars = dateSegments * (dateCharCount + 1);
+
     var generatedStyles = document.createElement("style");
+    generatedStyles.id = "generated-styles";
     generatedStyles.innerHTML =
       createCharRotationStyles(".initial-text", 6, 120, -60) +
       createCharRotationStyles(".weekday-label", 9, 90, -45) +
       createCharRotationStyles(".weekday-content", 28, 270, -135) +
       createCharRotationStyles(".date-label", 4, 90, -45) +
-      createCharRotationStyles(".date-content", 93, 270, -135) +
+      createCharRotationStyles(".date-content", dateChars, 270, -135) +
       createCharRotationStyles(".month-label", 6, 90, -45) +
       createCharRotationStyles(".month-content", 48, 270, -135);
     document.head.appendChild(generatedStyles);
@@ -119,6 +125,27 @@
     }
   }
 
+  function getDaysInMonth(month, year) {
+    return new Date(year, month, 0).getDate();
+  }
+
+  function updateDateRing() {
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    dateSegments = getDaysInMonth(month, year);
+
+    var dateContent = document.querySelector(".date-content");
+    var contentString = "";
+    for(var i=1; i<=dateSegments; i++) {
+        var dayStr = i < 10 ? "0" + i : "" + i;
+        contentString += dayStr + (i === dateSegments ? "" : " ");
+    }
+    dateContent.textContent = contentString;
+    applyLettering(dateContent);
+    injectStyles();
+  }
+
   // Update clock pointers and check for date changes
   function updateClock() {
     var now = new Date();
@@ -144,6 +171,19 @@
     var newMonthNum = now.getMonth() + 1;
     var newWeekdayIndex = now.getDay() === 0 ? 7 : now.getDay();
 
+    if (newMonthNum !== monthNum) {
+      monthNum = newMonthNum;
+      updateDateRing(); // Re-generate date ring if month changes
+      adjustRingPosition(
+        monthNum,
+        monthSegments,
+        monthCharCount,
+        document.getElementById("month-ring"),
+        document.querySelector(".month-content"),
+        monthHighlightColor
+      );
+    }
+
     if (newDateNum !== dateNum) {
       dateNum = newDateNum;
       adjustRingPosition(
@@ -155,17 +195,7 @@
         dateHighlightColor
       );
     }
-    if (newMonthNum !== monthNum) {
-      monthNum = newMonthNum;
-      adjustRingPosition(
-        monthNum,
-        monthSegments,
-        monthCharCount,
-        document.getElementById("month-ring"),
-        document.querySelector(".month-content"),
-        monthHighlightColor
-      );
-    }
+
     if (newWeekdayIndex !== weekdayIndex) {
       weekdayIndex = newWeekdayIndex;
       adjustRingPosition(
@@ -201,12 +231,20 @@
   }
 
   function setupClock() {
-    // Apply lettering to all text elements
+    // Retrieve current date information
+    var now = new Date();
+    weekdayIndex = now.getDay() === 0 ? 7 : now.getDay();
+    dateNum = now.getDate();
+    monthNum = now.getMonth() + 1;
+
+    // Initialize rings
+    updateDateRing(); // Dynamically create date ring content
+
+    // Apply lettering to other text elements
     applyLettering(document.querySelector(".initial-text"));
     applyLettering(document.querySelector(".weekday-label"));
     applyLettering(document.querySelector(".weekday-content"));
     applyLettering(document.querySelector(".date-label"));
-    applyLettering(document.querySelector(".date-content"));
     applyLettering(document.querySelector(".month-label"));
     applyLettering(document.querySelector(".month-content"));
 
@@ -223,12 +261,6 @@
     monthLabel.style.opacity = 1;
     weekdayLabel.style.opacity = 1;
     initialText.style.opacity = 1;
-
-    // Retrieve current date information
-    var now = new Date();
-    weekdayIndex = now.getDay() === 0 ? 7 : now.getDay();
-    dateNum = now.getDate();
-    monthNum = now.getMonth() + 1;
 
     // Animate date ring
     setTimeout(function () {
