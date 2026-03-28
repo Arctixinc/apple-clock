@@ -16,37 +16,40 @@
 
         h1 {
             color: #555;
-            font-size: 25px;
+            font-size: clamp(14px, 4vmin, 25px);
         }
 
         h2 {
             color: #555;
-            font-size: 15px;
+            font-size: clamp(10px, 2.5vmin, 15px);
         }
 
         .clock-center {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 150px;
-            height: 150px;
+            width: 30vmin;
+            height: 30vmin;
+            max-width: 150px;
+            max-height: 150px;
             background-color: #202020;
             border-radius: 50%;
             color: #000;
             box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
             cursor: pointer;
             overflow: hidden;
-            transition: transform 0.1s ease-out;
             z-index: 10;
         }
 
         .initial-text span {
             position: absolute;
             top: 0%;
-            left: calc(50% - 12.5px);
-            height: 150px;
-            width: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 30vmin;
+            width: 5vmin;
+            max-height: 150px;
+            max-width: 25px;
             text-align: center;
             transform-origin: center center;
         }
@@ -56,22 +59,26 @@
         }
 
         .circle-top {
-            position: relative;
+            position: absolute;
             top: 50%;
             left: 50%;
-            transform: translateX(-50%) translateY(-50%);
-            width: 50px;
-            height: 50px;
+            transform: translate(-50%, -50%);
+            width: 10vmin;
+            height: 10vmin;
+            max-width: 50px;
+            max-height: 50px;
             background: #FFF;
             border-radius: 50%;
         }
 
         .circle-bottom {
-            position: relative;
-            top: calc(50% - 20px);
-            left: calc(50% - 50px);
-            width: 100px;
-            height: 100px;
+            position: absolute;
+            top: 45%;
+            left: 45%;
+            width: 20vmin;
+            height: 20vmin;
+            max-width: 100px;
+            max-height: 100px;
             background: #FFF;
             border-radius: 50%;
         }
@@ -79,9 +86,12 @@
         .pointer-wrapper {
             position: absolute;
             top: 0%;
-            left: calc(50% - 12.5px);
-            width: 25px;
-            height: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5vmin;
+            height: 30vmin;
+            max-width: 25px;
+            max-height: 150px;
             text-align: center;
             transform-origin: center center;
             opacity: 0;
@@ -89,10 +99,13 @@
 
         .pointer-hour {
             position: relative;
-            top: calc(50% - 45px);
-            left: calc(50% - 5px);
-            width: 10px;
-            height: 50px;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2vmin;
+            height: 10vmin;
+            max-width: 10px;
+            max-height: 50px;
             background: #FFF;
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(255,255,255,0.5);
@@ -100,10 +113,13 @@
 
         .pointer-minute {
             position: relative;
-            top: calc(50% - 65px);
-            left: calc(50% - 5px);
-            width: 10px;
-            height: 70px;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2vmin;
+            height: 14vmin;
+            max-width: 10px;
+            max-height: 70px;
             background: #CCC;
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(204,204,204,0.5);
@@ -111,10 +127,13 @@
 
         .pointer-second {
             position: relative;
-            top: calc(50% - 69px);
-            left: calc(50% - 1px);
-            width: 2px;
-            height: 70px;
+            top: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0.5vmin;
+            height: 14vmin;
+            max-width: 2px;
+            max-height: 70px;
             background: #FF2D55;
             border-radius: 1px;
             box-shadow: 0 0 8px rgba(255,45,85,0.7);
@@ -124,18 +143,21 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 250px;
-            height: 250px;
-            transition: transform 0.15s ease-out;
+            width: 55vmin;
+            height: 55vmin;
+            max-width: 250px;
+            max-height: 250px;
         }
 
         .weekday-label span {
             position: absolute;
-            top: calc(-25% - 5px);
-            left: calc(50% - 12.5px);
-            height: 250px;
-            width: 25px;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 55vmin;
+            width: 5vmin;
+            max-height: 250px;
+            max-width: 25px;
             text-align: center;
             transform-origin: center center;
         }
@@ -146,10 +168,13 @@
 
         .weekday-content span {
             position: absolute;
-            top: calc(-25% + 5px);
-            left: calc(50% - 6px);
-            height: 232px;
-            width: 12px;
+            top: -18%;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 51vmin;
+            width: 3vmin;
+            max-height: 232px;
+            max-width: 12px;
             text-align: center;
             transform-origin: center center;
             transition: color 0.3s, text-shadow 0.3s;
@@ -163,18 +188,21 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 350px;
-            height: 350px;
-            transition: transform 0.2s ease-out;
+            width: 75vmin;
+            height: 75vmin;
+            max-width: 350px;
+            max-height: 350px;
         }
 
         .month-label span {
             position: absolute;
-            top: calc(-25% + 20px);
-            left: calc(50% - 12.5px);
-            height: 350px;
-            width: 25px;
+            top: -15%;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 75vmin;
+            width: 5vmin;
+            max-height: 350px;
+            max-width: 25px;
             text-align: center;
             transform-origin: center center;
         }
@@ -185,10 +213,13 @@
 
         .month-content span {
             position: absolute;
-            top: calc(-25% + 30px);
-            left: calc(50% - 6px);
-            height: 332px;
-            width: 12px;
+            top: -12%;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 71vmin;
+            width: 3vmin;
+            max-height: 332px;
+            max-width: 12px;
             text-align: center;
             transform-origin: center center;
             transition: color 0.3s, text-shadow 0.3s;
@@ -202,18 +233,21 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 450px;
-            height: 450px;
-            transition: transform 0.25s ease-out;
+            width: 95vmin;
+            height: 95vmin;
+            max-width: 450px;
+            max-height: 450px;
         }
 
         .date-label span {
             position: absolute;
-            top: calc(-25% + 45px);
-            left: calc(50% - 12.5px);
-            height: 450px;
-            width: 25px;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 95vmin;
+            width: 5vmin;
+            max-height: 450px;
+            max-width: 25px;
             text-align: center;
             transform-origin: center center;
         }
@@ -224,10 +258,13 @@
 
         .date-content span {
             position: absolute;
-            top: calc(-25% + 55px);
-            left: calc(50% - 6px);
-            height: 432px;
-            width: 12px;
+            top: -8%;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 91vmin;
+            width: 3vmin;
+            max-height: 432px;
+            max-width: 12px;
             text-align: center;
             transform-origin: center center;
             transition: color 0.3s, text-shadow 0.3s;
@@ -241,60 +278,42 @@
             opacity: .05;
             width: 100%;
             height: 100%;
-            border: solid 10px transparent;
+            border: solid 2vmin transparent;
             border-radius: 50%;
         }
 
         .outer-ring:before {
             position: absolute;
-            top: 5px;
-            left: 5px;
-            bottom: 5px;
-            right: 5px;
+            top: 1vmin;
+            left: 1vmin;
+            bottom: 1vmin;
+            right: 1vmin;
             border-radius: 50%;
-            border: solid 35px #FFFFFF;
+            border: solid 7vmin #FFFFFF;
             content: " ";
         }
 
         .inner-ring {
-            position: relative;
-            top: -100%;
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            border: solid 45px #202020;
+            border: solid 9vmin #202020;
             border-radius: 50%;
             border-bottom-color: transparent;
             box-shadow: 0px -5px 15px rgba(0,0,0,0.3);
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .date-circle {
-                width: 90vw;
-                height: 90vw;
-                max-width: 450px;
-                max-height: 450px;
+        @media (min-width: 450px) {
+            .inner-ring {
+                border-width: 45px;
             }
-
-            .month-circle {
-                width: 70vw;
-                height: 70vw;
-                max-width: 350px;
-                max-height: 350px;
+            .outer-ring {
+                border-width: 10px;
             }
-
-            .weekday-circle {
-                width: 50vw;
-                height: 50vw;
-                max-width: 250px;
-                max-height: 250px;
-            }
-
-            .clock-center {
-                width: 30vw;
-                height: 30vw;
-                max-width: 150px;
-                max-height: 150px;
+            .outer-ring:before {
+                border-width: 35px;
             }
         }
