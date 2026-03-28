@@ -15,6 +15,9 @@
     monthHighlightColor = "#007AFF",
     weekdayHighlightColor = "#4CD964";
 
+  var mouseX = 0, mouseY = 0;
+  var targetX = 0, targetY = 0;
+
   // Vanilla JS lettering implementation
   function applyLettering(element) {
     var text = element.textContent;
@@ -102,37 +105,99 @@
     ringElement.style.webkitTransform = "rotate(" + finalRotation + "deg)";
 
     var chars = textElement.querySelectorAll("span");
+    // Reset all colors first
+    for(var j=0; j<chars.length; j++) {
+        chars[j].style.color = "";
+        chars[j].style.textShadow = "";
+    }
+
     for (var i = startCharIndex; i < startCharIndex + charsPerSegment; i++) {
       if (chars[i - 1]) {
         chars[i - 1].style.color = highlightColor;
+        chars[i - 1].style.textShadow = "0 0 10px " + highlightColor;
       }
     }
   }
 
-  // Update clock pointers
-  function animateClockPointers() {
-    setInterval(function () {
-      var now = new Date();
-      var secs = now.getSeconds();
-      var mins = now.getMinutes();
-      var hrs = now.getHours();
-      var secAngle = secs * 6;
-      var minAngle = mins * 6;
-      var hrAngle = hrs * 30 + mins / 2;
+  // Update clock pointers and check for date changes
+  function updateClock() {
+    var now = new Date();
+    var ms = now.getMilliseconds();
+    var secs = now.getSeconds() + ms / 1000;
+    var mins = now.getMinutes() + secs / 60;
+    var hrs = now.getHours() + mins / 60;
 
-      var secWrapper = document.getElementById("sec-wrapper");
-      var minWrapper = document.getElementById("min-wrapper");
-      var hrWrapper = document.getElementById("hr-wrapper");
+    var secAngle = secs * 6;
+    var minAngle = mins * 6;
+    var hrAngle = (hrs % 12) * 30;
 
-      secWrapper.style.transform = "rotate(" + secAngle + "deg)";
-      secWrapper.style.webkitTransform = "rotate(" + secAngle + "deg)";
+    var secWrapper = document.getElementById("sec-wrapper");
+    var minWrapper = document.getElementById("min-wrapper");
+    var hrWrapper = document.getElementById("hr-wrapper");
 
-      minWrapper.style.transform = "rotate(" + minAngle + "deg)";
-      minWrapper.style.webkitTransform = "rotate(" + minAngle + "deg)";
+    if(secWrapper) secWrapper.style.transform = "rotate(" + secAngle + "deg)";
+    if(minWrapper) minWrapper.style.transform = "rotate(" + minAngle + "deg)";
+    if(hrWrapper) hrWrapper.style.transform = "rotate(" + hrAngle + "deg)";
 
-      hrWrapper.style.transform = "rotate(" + hrAngle + "deg)";
-      hrWrapper.style.webkitTransform = "rotate(" + hrAngle + "deg)";
-    }, 1000);
+    // Check if date components changed
+    var newDateNum = now.getDate();
+    var newMonthNum = now.getMonth() + 1;
+    var newWeekdayIndex = now.getDay() === 0 ? 7 : now.getDay();
+
+    if (newDateNum !== dateNum) {
+      dateNum = newDateNum;
+      adjustRingPosition(
+        dateNum,
+        dateSegments,
+        dateCharCount,
+        document.getElementById("date-ring"),
+        document.querySelector(".date-content"),
+        dateHighlightColor
+      );
+    }
+    if (newMonthNum !== monthNum) {
+      monthNum = newMonthNum;
+      adjustRingPosition(
+        monthNum,
+        monthSegments,
+        monthCharCount,
+        document.getElementById("month-ring"),
+        document.querySelector(".month-content"),
+        monthHighlightColor
+      );
+    }
+    if (newWeekdayIndex !== weekdayIndex) {
+      weekdayIndex = newWeekdayIndex;
+      adjustRingPosition(
+        weekdayIndex,
+        weekdaySegments,
+        weekdayCharCount,
+        document.getElementById("weekday-ring"),
+        document.querySelector(".weekday-content"),
+        weekdayHighlightColor
+      );
+    }
+
+    // Parallax effect
+    targetX += (mouseX - targetX) * 0.05;
+    targetY += (mouseY - targetY) * 0.05;
+
+    var containers = [".clock-center", ".weekday-circle", ".month-circle", ".date-circle"];
+    containers.forEach(function(selector, index) {
+        var el = document.querySelector(selector);
+        if(el) {
+            var depth = (index + 1) * 5;
+            var moveX = targetX * depth;
+            var moveY = targetY * depth;
+            if(selector === ".clock-center") {
+                el.style.transform = "translate(calc(-50% + " + moveX + "px), calc(-50% + " + moveY + "px))";
+            } else {
+                el.style.transform = "translateX(calc(-50% + " + moveX + "px)) translateY(calc(-50% + " + moveY + "px))";
+            }
+        }
+    });
+
+    requestAnimationFrame(updateClock);
   }
 
   function setupClock() {
@@ -160,14 +225,10 @@
     initialText.style.opacity = 1;
 
     // Retrieve current date information
-    currentDate = new Date();
-    weekdayIndex = currentDate.getDay();
-    dateNum = currentDate.getDate();
-    monthNum = currentDate.getMonth() + 1;
-
-    if (weekdayIndex === 0) {
-      weekdayIndex = 7;
-    }
+    var now = new Date();
+    weekdayIndex = now.getDay() === 0 ? 7 : now.getDay();
+    dateNum = now.getDate();
+    monthNum = now.getMonth() + 1;
 
     // Animate date ring
     setTimeout(function () {
@@ -236,8 +297,14 @@
       }
     }, 2000);
 
+    // Mouse movement tracking
+    document.addEventListener("mousemove", function(e) {
+        mouseX = (e.clientX / window.innerWidth) - 0.5;
+        mouseY = (e.clientY / window.innerHeight) - 0.5;
+    });
+
     // Start clock animation
-    animateClockPointers();
+    requestAnimationFrame(updateClock);
   }
 
   // Initialize when DOM is ready
