@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Circular Digital Clock</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <div class="clock-center">
+  <h1 class="initial-text">HELLO</h1>
+  <div class="circle-top"></div>
+  <div class="circle-bottom"></div>
+  <div class="pointer-wrapper" id="min-wrapper">
+    <div class="pointer-minute"></div>
+  </div>
+  <div class="pointer-wrapper" id="hr-wrapper">
+    <div class="pointer-hour"></div>
+  </div>
+  <div class="pointer-wrapper" id="sec-wrapper">
+    <div class="pointer-second"></div>
+  </div>
+</div>
+
+<div class="weekday-circle">
+  <div class="outer-ring"></div>
+  <div class="inner-ring" id="weekday-ring">
+    <h1 class="weekday-label">DAY NAME</h1>
+    <h2 class="weekday-content">MON TUE WED THU FRI SAT SUN</h2>
+  </div>
+</div>
+
+<div class="month-circle">
+  <div class="outer-ring"></div>
+  <div class="inner-ring" id="month-ring">
+    <h1 class="month-label">MONTH</h1>
+    <h2 class="month-content">JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC</h2>
+  </div>
+</div>
+
+<div class="date-circle">
+  <div class="outer-ring"></div>
+  <div class="inner-ring" id="date-ring">
+    <h1 class="date-label">DAY</h1>
+    <h2 class="date-content">01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31</h2>
+  </div>
+</div>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>

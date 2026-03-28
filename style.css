@@ -1,0 +1,294 @@
+* {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            background: #292929;
+            border: 0;
+            font-family: 'Roboto Mono', monospace;
+            height: 100%;
+            margin: 0px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #555;
+            font-size: 25px;
+        }
+
+        h2 {
+            color: #555;
+            font-size: 15px;
+        }
+
+        .clock-center {
+            position: absolute;
+            top: calc(50% - 75px);
+            left: calc(50% - 75px);
+            width: 150px;
+            height: 150px;
+            background-color: #202020;
+            border-radius: 50%;
+            color: #000;
+            box-shadow: 0px 2px 2px #000;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all .5s;
+            z-index: 10;
+        }
+
+        .initial-text span {
+            position: absolute;
+            top: 0%;
+            left: calc(50% - 12.5px);
+            height: 150px;
+            width: 25px;
+            text-align: center;
+            transform-origin: center center;
+        }
+
+        .initial-text {
+            opacity: 0;
+        }
+
+        .circle-top {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: #FFF;
+            border-radius: 50%;
+        }
+
+        .circle-bottom {
+            position: relative;
+            top: calc(50% - 20px);
+            left: calc(50% - 50px);
+            width: 100px;
+            height: 100px;
+            background: #FFF;
+            border-radius: 50%;
+        }
+
+        .pointer-wrapper {
+            position: absolute;
+            top: 0%;
+            left: calc(50% - 12.5px);
+            width: 25px;
+            height: 150px;
+            text-align: center;
+            transform-origin: center center;
+            opacity: 0;
+        }
+
+        .pointer-hour {
+            position: relative;
+            top: calc(50% - 45px);
+            left: calc(50% - 5px);
+            width: 10px;
+            height: 50px;
+            background: #FFF;
+            border-radius: 5px;
+            transition: all .5s;
+        }
+
+        .pointer-minute {
+            position: relative;
+            top: calc(50% - 65px);
+            left: calc(50% - 5px);
+            width: 10px;
+            height: 70px;
+            background: #CCC;
+            border-radius: 5px;
+        }
+
+        .pointer-second {
+            position: relative;
+            top: calc(50% - 69px);
+            left: calc(50% - 1px);
+            width: 2px;
+            height: 70px;
+            background: #AAA;
+            border-radius: 1px;
+        }
+
+        .weekday-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            width: 250px;
+            height: 250px;
+            transition: all .5s;
+        }
+
+        .weekday-label span {
+            position: absolute;
+            top: calc(-25% - 5px);
+            left: calc(50% - 12.5px);
+            height: 250px;
+            width: 25px;
+            text-align: center;
+            transform-origin: center center;
+        }
+
+        .weekday-label {
+            opacity: 0;
+        }
+
+        .weekday-content span {
+            position: absolute;
+            top: calc(-25% + 5px);
+            left: calc(50% - 6px);
+            height: 232px;
+            width: 12px;
+            text-align: center;
+            transform-origin: center center;
+        }
+
+        .weekday-content {
+            opacity: 0;
+        }
+
+        .month-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            width: 350px;
+            height: 350px;
+            transition: all .5s;
+        }
+
+        .month-label span {
+            position: absolute;
+            top: calc(-25% + 20px);
+            left: calc(50% - 12.5px);
+            height: 350px;
+            width: 25px;
+            text-align: center;
+            transform-origin: center center;
+        }
+
+        .month-label {
+            opacity: 0;
+        }
+
+        .month-content span {
+            position: absolute;
+            top: calc(-25% + 30px);
+            left: calc(50% - 6px);
+            height: 332px;
+            width: 12px;
+            text-align: center;
+            transform-origin: center center;
+        }
+
+        .month-content {
+            opacity: 0;
+        }
+
+        .date-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            width: 450px;
+            height: 450px;
+            transition: all .5s;
+        }
+
+        .date-label span {
+            position: absolute;
+            top: calc(-25% + 45px);
+            left: calc(50% - 12.5px);
+            height: 450px;
+            width: 25px;
+            text-align: center;
+            transform-origin: center center;
+        }
+
+        .date-label {
+            opacity: 0;
+        }
+
+        .date-content span {
+            position: absolute;
+            top: calc(-25% + 55px);
+            left: calc(50% - 6px);
+            height: 432px;
+            width: 12px;
+            text-align: center;
+            transform-origin: center center;
+        }
+
+        .date-content {
+            opacity: 0;
+        }
+
+        .outer-ring {
+            opacity: .1;
+            width: 100%;
+            height: 100%;
+            border: solid 10px transparent;
+            border-radius: 50%;
+        }
+
+        .outer-ring:before {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            bottom: 5px;
+            right: 5px;
+            border-radius: 50%;
+            border: solid 35px #FFFFFF;
+            content: " ";
+        }
+
+        .inner-ring {
+            position: relative;
+            top: -100%;
+            width: 100%;
+            height: 100%;
+            border: solid 45px #202020;
+            border-radius: 50%;
+            border-bottom-color: transparent;
+            box-shadow: 0px -2px 2px #000;
+            transition: all .5s;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .date-circle {
+                width: 90vw;
+                height: 90vw;
+                max-width: 450px;
+                max-height: 450px;
+            }
+
+            .month-circle {
+                width: 70vw;
+                height: 70vw;
+                max-width: 350px;
+                max-height: 350px;
+            }
+
+            .weekday-circle {
+                width: 50vw;
+                height: 50vw;
+                max-width: 250px;
+                max-height: 250px;
+            }
+
+            .clock-center {
+                width: 30vw;
+                height: 30vw;
+                max-width: 150px;
+                max-height: 150px;
+                top: calc(50% - 15vw);
+                left: calc(50% - 15vw);
+            }
+        }
